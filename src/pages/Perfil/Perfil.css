@@ -1,0 +1,50 @@
+.perfil-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.perfil-nav {
+  background: white;
+  padding: 20px 5%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-back {
+  background: none; border: none; color: #e63946;
+  font-weight: 700; cursor: pointer; font-size: 1rem;
+}
+
+.perfil-content { padding: 30px 5%; max-width: 600px; margin: 0 auto; }
+
+.perfil-card-main {
+  background: white; border-radius: 25px; padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+}
+
+.avatar-large-box {
+  width: 150px; height: 150px; border-radius: 50%;
+  margin: 0 auto 15px; border: 5px solid #e63946;
+  overflow: hidden; background: #eee;
+}
+
+.avatar-large-box img { width: 100%; height: 100%; object-fit: cover; }
+
+.camera-overlay { color: #e63946; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+
+.user-details-list { margin-top: 30px; text-align: left; }
+
+.detail-row {
+  margin-bottom: 20px; border-bottom: 1px solid #f5f5f5; padding-bottom: 10px;
+}
+
+.detail-row label { font-size: 0.75rem; color: #aaa; text-transform: uppercase; font-weight: 800; }
+
+.detail-row p { margin: 5px 0 0; font-size: 1.1rem; color: #333; font-weight: 500; }
+
+.perfil-role-badge {
+  display: inline-block; background: #fff0f0; color: #e63946;
+  padding: 5px 15px; border-radius: 10px; margin-top: 5px; font-weight: 700;
+}

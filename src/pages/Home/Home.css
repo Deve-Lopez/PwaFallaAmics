@@ -1,266 +1,98 @@
-/* =============================================
-   1. RESET Y CONFIGURACIÓN DE SCROLL
-   ============================================= */
+/* ESTRUCTURA GENERAL */
 html, body {
-    margin: 0;
-    padding: 0;
-    /* Permitir scroll vertical siempre */
-    overflow-y: auto !important; 
-    /* Altura automática para que el contenido empuje el scroll */
-    height: auto !important;
-    min-height: 100%;
-    background-color: #f8f9fa;
-    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  margin: 0; padding: 0;
+  overflow-y: auto !important;
+  height: auto !important;
+  background-color: #f8f9fa;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Contenedor principal */
 .app-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ocupa al menos toda la pantalla */
-    height: auto !important; /* Pero crece si hay contenido */
-    width: 100%;
-    overflow-x: hidden; /* Evita scroll horizontal */
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* =============================================
-   2. NAVBAR (FIJO ARRIBA)
-   ============================================= */
-.navbar {
-    background: #ffffff;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    flex-shrink: 0; /* Que no se encoja */
+/* HEADER */
+.home-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%; /* Más aire */
+  background: white;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+  position: sticky; top: 0; z-index: 1000;
 }
 
-.nav-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.header-left-content { display: flex; align-items: center; gap: 20px; }
+
+.logo-container-small .nav-logo-img {
+  width: 120px; height: auto; flex-shrink: 0;
 }
 
-.nav-title { 
-    font-weight: 800; 
-    color: #e63946; 
-    font-size: 1.2rem; 
+.welcome-text-group h1 { font-size: 1.4rem; margin: 0; color: #333; }
+.user-name-style { color: #e63946; font-weight: 800; }
+.sub-header-text { color: #aaa; font-size: 0.9rem; margin-top: 4px; }
+
+/* AVATAR - TAMAÑO AUMENTADO */
+.avatar-nav-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s ease;
 }
 
-/* =============================================
-   3. CUERPO DE LA APP (EL CONTENIDO)
-   ============================================= */
-.main-content {
-    flex: 1 0 auto; /* Importante: permite que el contenido crezca */
-    width: 90%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 0 60px 0; /* Espacio arriba y abajo */
+.avatar-nav-link:hover { transform: scale(1.05); }
+
+.profile-circle-nav {
+  width: 85px;  /* Aumentado de 65px */
+  height: 85px; /* Aumentado de 65px */
+  border-radius: 50%; 
+  overflow: hidden;
+  border: 4px solid #e63946; /* Borde más grueso */
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Sección del Logo */
-.brand-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+.profile-circle-nav img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-placeholder-nav { font-size: 40px; }
+
+.profile-hint {
+  font-size: 0.85rem;
+  color: #e63946;
+  font-weight: 700;
 }
 
-.main-logo-large {
-    width: 300px; /* Tamaño solicitado */
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+/* CONTENIDO */
+.main-content { padding: 40px 5%; max-width: 1000px; margin: 0 auto; flex: 1; }
+.glass-card-compact {
+  background: white; border-radius: 25px; padding: 30px;
+  border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 
-/* Banner de bienvenida */
-.welcome-banner { 
-    text-align: center; 
-    margin-bottom: 40px; 
+.spacer-40 { height: 40px; }
+.btn-logout-minimal {
+  background: #fdf2f2; color: #e63946; border: none;
+  padding: 12px 25px; border-radius: 12px; font-weight: 700; cursor: pointer;
 }
 
-.welcome-banner h1 { 
-    font-size: 2.2rem; 
-    color: #1a1a1a; 
-    margin: 0 0 5px 0; 
-}
-
-.welcome-banner p { 
-    color: #6c757d; 
-    font-size: 1.1rem; 
-    margin: 0;
-}
-
-/* =============================================
-   4. DASHBOARD (CARDS)
-   ============================================= */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-}
-
-.glass-card {
-    background: white;
-    border-radius: 25px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
-}
-
-/* Avatar y Perfil */
-.avatar-upload {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.avatar-label { 
-    position: relative; 
-    cursor: pointer; 
-}
-
-.avatar-container {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid #e63946;
-    background: #f0f0f0;
-}
-
-.avatar-container img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-}
-
-.avatar-placeholder {
-    font-size: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-.edit-badge {
-    position: absolute; 
-    bottom: 5px; 
-    right: 5px;
-    background: #e63946; 
-    color: white;
-    width: 35px; 
-    height: 35px; 
-    border-radius: 50%;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-}
-
-.profile-info { 
-    text-align: center; 
-}
-
-.user-role-badge {
-    display: inline-block;
-    padding: 6px 15px;
-    background: #fff0f0;
-    color: #e63946;
-    border-radius: 50px;
-    font-weight: 700;
-    margin-top: 10px;
-}
-
-/* Datos de la lista */
-.info-list { margin-top: 20px; }
-.info-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #f1f1f1;
-}
-
-.info-item label { font-weight: 600; color: #666; }
-.status-pill { color: #28a745; font-weight: 700; }
-
-/* =============================================
-   5. FOOTER Y BOTONES
-   ============================================= */
-.btn-logout-small {
-    background: #f8f9fa; 
-    border: 1px solid #ddd;
-    padding: 8px 16px; 
-    border-radius: 10px;
-    font-weight: 600; 
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-logout-small:hover { 
-    background: #e63946; 
-    color: white; 
-    border-color: #e63946;
-}
-
-.footer {
-    background: #212529;
-    color: #ffffff;
-    padding: 30px 0;
-    flex-shrink: 0; /* Para que el footer no se coma el espacio */
-}
-
-.footer-content {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* =============================================
-   6. RESPONSIVE (MÓVIL)
-   ============================================= */
+/* RESPONSIVE MÓVIL */
 @media (max-width: 768px) {
-    .main-logo-large { 
-        width: 220px; /* Un poco más pequeño en móvil */
-    }
-
-    .welcome-banner h1 { 
-        font-size: 1.7rem; 
-    }
-
-    .dashboard-grid {
-        grid-template-columns: 1fr; /* Una columna en móvil */
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .nav-title {
-        font-size: 0.9rem;
-    }
-}
-
-/* Animación de carga de imagen */
-.loading-spin { 
-    animation: pulse 1.5s infinite; 
-    opacity: 0.7; 
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+  .home-header-modern { padding: 15px 4%; }
+  .logo-container-small .nav-logo-img { width: 130px; }
+  
+  .welcome-text-group h1 { font-size: 1.1rem; max-width: 140px; }
+  
+  /* Avatar algo más pequeño en móvil que en PC, pero mayor que antes */
+  .profile-circle-nav {
+    width: 75px; 
+    height: 75px;
+    border: 3px solid #e63946;
+  }
+  .avatar-placeholder-nav { font-size: 35px; }
 }
