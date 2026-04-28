@@ -1,121 +1,266 @@
-/* Home.css */
-.home-container {
-  min-height: 100dvh;
-  background-color: #f4f4f9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 1.5rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* =============================================
+   1. RESET Y CONFIGURACIÓN DE SCROLL
+   ============================================= */
+html, body {
+    margin: 0;
+    padding: 0;
+    /* Permitir scroll vertical siempre */
+    overflow-y: auto !important; 
+    /* Altura automática para que el contenido empuje el scroll */
+    height: auto !important;
+    min-height: 100%;
+    background-color: #f8f9fa;
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.home-card {
-  background: #ffffff;
-  width: 100%;
-  max-width: 360px;
-  border-radius: 30px;
-  padding: 2.5rem 1.5rem;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  animation: fadeIn 0.6s ease-out;
+/* Contenedor principal */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ocupa al menos toda la pantalla */
+    height: auto !important; /* Pero crece si hay contenido */
+    width: 100%;
+    overflow-x: hidden; /* Evita scroll horizontal */
+    position: relative;
 }
 
-.welcome-text {
-  font-size: 1rem;
-  color: #777;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+/* =============================================
+   2. NAVBAR (FIJO ARRIBA)
+   ============================================= */
+.navbar {
+    background: #ffffff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-shrink: 0; /* Que no se encoja */
 }
 
-.user-name {
-  color: #E60000;
-  font-size: 1.6rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.2;
+.nav-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.profile-img-container {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 2rem;
+.nav-title { 
+    font-weight: 800; 
+    color: #e63946; 
+    font-size: 1.2rem; 
 }
 
-.profile-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #E60000;
-  box-shadow: 0 8px 20px rgba(230, 0, 0, 0.15);
+/* =============================================
+   3. CUERPO DE LA APP (EL CONTENIDO)
+   ============================================= */
+.main-content {
+    flex: 1 0 auto; /* Importante: permite que el contenido crezca */
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 0 60px 0; /* Espacio arriba y abajo */
 }
 
-.profile-placeholder {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  border: 4px solid #ccc;
+/* Sección del Logo */
+.brand-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
-.user-badge {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #E60000;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.main-logo-large {
+    width: 300px; /* Tamaño solicitado */
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
 }
 
-.info-section {
-  margin: 1.5rem 0;
-  padding: 1.5rem 0;
-  border-top: 1px solid #eee;
-  width: 100%;
+/* Banner de bienvenida */
+.welcome-banner { 
+    text-align: center; 
+    margin-bottom: 40px; 
 }
 
-.quote-text {
-  color: #888;
-  font-style: italic;
-  font-size: 0.9rem;
-  line-height: 1.4;
+.welcome-banner h1 { 
+    font-size: 2.2rem; 
+    color: #1a1a1a; 
+    margin: 0 0 5px 0; 
 }
 
-.btn-logout {
-  background-color: #222;
-  color: white;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100%;
-  max-width: 200px;
+.welcome-banner p { 
+    color: #6c757d; 
+    font-size: 1.1rem; 
+    margin: 0;
 }
 
-.btn-logout:active {
-  transform: scale(0.96);
-  background-color: #000;
+/* =============================================
+   4. DASHBOARD (CARDS)
+   ============================================= */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.glass-card {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+/* Avatar y Perfil */
+.avatar-upload {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.avatar-label { 
+    position: relative; 
+    cursor: pointer; 
+}
+
+.avatar-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #e63946;
+    background: #f0f0f0;
+}
+
+.avatar-container img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.avatar-placeholder {
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.edit-badge {
+    position: absolute; 
+    bottom: 5px; 
+    right: 5px;
+    background: #e63946; 
+    color: white;
+    width: 35px; 
+    height: 35px; 
+    border-radius: 50%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.profile-info { 
+    text-align: center; 
+}
+
+.user-role-badge {
+    display: inline-block;
+    padding: 6px 15px;
+    background: #fff0f0;
+    color: #e63946;
+    border-radius: 50px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+/* Datos de la lista */
+.info-list { margin-top: 20px; }
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.info-item label { font-weight: 600; color: #666; }
+.status-pill { color: #28a745; font-weight: 700; }
+
+/* =============================================
+   5. FOOTER Y BOTONES
+   ============================================= */
+.btn-logout-small {
+    background: #f8f9fa; 
+    border: 1px solid #ddd;
+    padding: 8px 16px; 
+    border-radius: 10px;
+    font-weight: 600; 
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-logout-small:hover { 
+    background: #e63946; 
+    color: white; 
+    border-color: #e63946;
+}
+
+.footer {
+    background: #212529;
+    color: #ffffff;
+    padding: 30px 0;
+    flex-shrink: 0; /* Para que el footer no se coma el espacio */
+}
+
+.footer-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =============================================
+   6. RESPONSIVE (MÓVIL)
+   ============================================= */
+@media (max-width: 768px) {
+    .main-logo-large { 
+        width: 220px; /* Un poco más pequeño en móvil */
+    }
+
+    .welcome-banner h1 { 
+        font-size: 1.7rem; 
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .nav-title {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animación de carga de imagen */
+.loading-spin { 
+    animation: pulse 1.5s infinite; 
+    opacity: 0.7; 
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }

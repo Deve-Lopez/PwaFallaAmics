@@ -1,37 +1,28 @@
-import { ref, get, child } from "firebase/database"; 
+import { ref, get } from "firebase/database"; 
 import { db } from "../firebase/firebaseConfig";
 
-export const loginWithUser = async (nombre, password) => {
+export const loginWithUser = async (dni, password) => {
   try {
-    const dbRef = ref(db);
-    const snapshot = await get(child(dbRef, 'Falleros'));
+    // Normalizamos el DNI a mayúsculas para que coincida con la Key de la DB
+    const cleanDNI = dni.trim().toUpperCase();
+    const userRef = ref(db, `Falleros/${cleanDNI}`);
+    const snapshot = await get(userRef);
 
     if (snapshot.exists()) {
-      const falleros = snapshot.val();
+      const userData = snapshot.val();
       
-      const userKey = Object.keys(falleros).find(key => {
-        const u = falleros[key];
-        
-        // Comparación limpia y segura
-        const matchNombre = u.Nombre?.trim().toLowerCase() === nombre.trim().toLowerCase();
-        const matchPass = u.Contrasenya?.toString().trim().toLowerCase() === password.trim().toLowerCase();
-
-        return matchNombre && matchPass;
-      });
-
-      if (userKey) {
-        const userData = falleros[userKey];
-        // Guardamos en el navegador para la sesión
-        localStorage.setItem("user", JSON.stringify(userData));
-        return { user: userData, error: null };
+      // Comparamos contraseña (puedes añadir .toLowerCase() si quieres que tampoco importe)
+      if (userData.Contrasenya?.toString().trim() === password.trim()) {
+        const userSession = { ...userData, id: cleanDNI };
+        localStorage.setItem("user", JSON.stringify(userSession));
+        return { user: userSession, error: null };
       }
-      return { user: null, error: "Nombre o contraseña incorrectos" };
+      return { user: null, error: "Contrasenya incorrecta." };
     }
-    return { user: null, error: "No hay datos en el sistema" };
+    return { user: null, error: "DNI no trobat." };
   } catch (err) {
-    // Solo dejamos este log para errores técnicos (red, firebase caído, etc.)
-    console.error("Error técnico en Login:", err.message); 
-    return { user: null, error: "Error de conexión con el servidor" };
+    console.error("Error en authService:", err);
+    return { user: null, error: "Error de connexió." };
   }
 };
 
