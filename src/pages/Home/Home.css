@@ -1,40 +1,69 @@
-/* ESTRUCTURA GENERAL */
+/* =========================
+   1. RESET / BASE GLOBAL
+========================= */
 html, body {
-  margin: 0; padding: 0;
-  overflow-y: auto !important;
-  height: auto !important;
+  margin: 0;
+  padding: 0;
   background-color: #f8f9fa;
-  -webkit-overflow-scrolling: touch;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* layout base app (FIX PWA IMPORTANTE) */
 .app-layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100dvh; /* 🔥 clave para móvil real */
 }
 
-/* HEADER */
+/* =========================
+   2. HEADER
+========================= */
 .home-header-modern {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 5%; /* Más aire */
+  padding: 20px 5%;
   background: white;
   box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-  position: sticky; top: 0; z-index: 1000;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.header-left-content { display: flex; align-items: center; gap: 20px; }
+/* IZQUIERDA HEADER */
+.header-left-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
+/* LOGO */
 .logo-container-small .nav-logo-img {
-  width: 120px; height: auto; flex-shrink: 0;
+  width: 110px;
+  height: auto;
 }
 
-.welcome-text-group h1 { font-size: 1.4rem; margin: 0; color: #333; }
-.user-name-style { color: #e63946; font-weight: 800; }
-.sub-header-text { color: #aaa; font-size: 0.9rem; margin-top: 4px; }
+/* TEXTO HEADER */
+.welcome-text-group h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #333;
+}
 
-/* AVATAR - TAMAÑO AUMENTADO */
+.user-name-style {
+  color: #e63946;
+  font-weight: 800;
+}
+
+.sub-header-text {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* =========================
+   3. AVATAR
+========================= */
 .avatar-nav-link {
   text-decoration: none;
   display: flex;
@@ -44,14 +73,16 @@ html, body {
   transition: transform 0.2s ease;
 }
 
-.avatar-nav-link:hover { transform: scale(1.05); }
+.avatar-nav-link:hover {
+  transform: scale(1.05);
+}
 
 .profile-circle-nav {
-  width: 85px;  /* Aumentado de 65px */
-  height: 85px; /* Aumentado de 65px */
-  border-radius: 50%; 
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #e63946; /* Borde más grueso */
+  border: 4px solid #e63946;
   box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
   background: #f0f0f0;
   display: flex;
@@ -59,8 +90,15 @@ html, body {
   align-items: center;
 }
 
-.profile-circle-nav img { width: 100%; height: 100%; object-fit: cover; }
-.avatar-placeholder-nav { font-size: 40px; }
+.profile-circle-nav img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder-nav {
+  font-size: 40px;
+}
 
 .profile-hint {
   font-size: 0.85rem;
@@ -68,31 +106,135 @@ html, body {
   font-weight: 700;
 }
 
-/* CONTENIDO */
-.main-content { padding: 40px 5%; max-width: 1000px; margin: 0 auto; flex: 1; }
+/* =========================
+   4. CONTENIDO
+========================= */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 40px 5%;
+}
+
+/* CARD CENTRADA REAL */
 .glass-card-compact {
-  background: white; border-radius: 25px; padding: 30px;
-  border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  background: white;
+  border-radius: 25px;
+  padding: 30px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+
+  width: 100%;
+  max-width: 600px;
 }
 
-.spacer-40 { height: 40px; }
+/* UTILIDADES */
+.spacer-40 {
+  height: 40px;
+}
+
+/* BOTÓN */
 .btn-logout-minimal {
-  background: #fdf2f2; color: #e63946; border: none;
-  padding: 12px 25px; border-radius: 12px; font-weight: 700; cursor: pointer;
+  background: #fdf2f2;
+  color: #e63946;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
-/* RESPONSIVE MÓVIL */
+/* =========================
+   5. FOOTER
+========================= */
+.footer-container {
+  background-color: #333333;
+  width: 100%;
+  height: 60px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-copy {
+  margin: 0;
+  font-size: 0.85rem;
+  color: white;
+  font-weight: 500;
+}
+
+.redes-sociales {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.redes-sociales a {
+  color: white;
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.redes-sociales a:hover {
+  transform: scale(1.2);
+  color: #e63946;
+}
+/* =========================
+   6. RESPONSIVE
+========================= */
+
+/* MÓVIL */
 @media (max-width: 768px) {
-  .home-header-modern { padding: 15px 4%; }
-  .logo-container-small .nav-logo-img { width: 130px; }
-  
-  .welcome-text-group h1 { font-size: 1.1rem; max-width: 140px; }
-  
-  /* Avatar algo más pequeño en móvil que en PC, pero mayor que antes */
+
+  .home-header-modern {
+    padding: 15px 1%;
+  }
+
+  .logo-container-small .nav-logo-img {
+    width: 100px;
+  }
+
+  .welcome-text-group h1 {
+    font-size: 1.1rem;
+    max-width: 140px;
+  }
+
   .profile-circle-nav {
-    width: 75px; 
+    width: 75px;
     height: 75px;
     border: 3px solid #e63946;
   }
-  .avatar-placeholder-nav { font-size: 35px; }
+
+  .avatar-placeholder-nav {
+    font-size: 35px;
+  }
+}
+
+/* WEB */
+@media (min-width: 769px) {
+
+  .logo-container-small .nav-logo-img {
+    width: 220px;
+  }
+
+  .home-header-modern {
+    padding: 10px 15%;
+  }
+
+  .main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .profile-circle-nav {
+    width: 85px;
+    height: 85px;
+  }
 }
