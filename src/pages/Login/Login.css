@@ -1,13 +1,3 @@
-/* --- RESET MAESTRO --- */
-:root, html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-}
-
 /* --- CONTENEDOR (POSICIÓN ALTA) --- */
 .login-container {
   position: fixed;
@@ -17,12 +7,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Todo hacia arriba */
+  justify-content: flex-start;
   background-size: cover;
   background-position: center;
   z-index: 1;
-  /* AJUSTE MANUAL: Cambia 2vh por 5vh si quieres bajarlo un poquito más */
-  padding-top: 2vh; 
+  padding-top: 2vh;
 }
 
 .login-overlay {
@@ -44,20 +33,18 @@
   box-sizing: border-box;
 }
 
-/* --- EL LOGO (CONTROL DE TAMAÑO MANUAL) --- */
+/* --- LOGO --- */
 .login-logo-custom {
   display: block;
-  /* AJUSTE MANUAL: Cambia 420px al tamaño que prefieras */
   width: 90%;
-  max-width: 420px; 
+  max-width: 420px;
   height: auto;
-  /* AJUSTE MANUAL: Distancia con la tarjeta (negativo = más cerca) */
-  margin-bottom: -10px; 
+  margin-bottom: -10px;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
   z-index: 3;
 }
 
-/* --- TARJETA REFINADA --- */
+/* --- TARJETA --- */
 .login-card {
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(25px);
@@ -69,7 +56,7 @@
   width: 100%;
   max-width: 380px;
   box-sizing: border-box;
-  text-align: center; /* Centra las etiquetas (labels) */
+  text-align: center;
 }
 
 /* --- FORMULARIO E INPUTS --- */
@@ -82,7 +69,7 @@
 .input-group {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra la etiqueta sobre el input */
+  align-items: center;
 }
 
 .input-group label {
@@ -103,16 +90,14 @@
   color: #222;
   outline: none;
   box-sizing: border-box;
-  /* CENTRADO DE TEXTO DENTRO DEL INPUT */
-  text-align: center; 
+  text-align: center;
 }
 
-/* --- BOTÓN ROJO SÓLIDO ESTÉTICO --- */
+/* --- BOTÓN --- */
 .btn-login-red {
   width: 100%;
   padding: 18px;
-  /* Rojo sólido potente */
-  background-color: #E60000; 
+  background-color: #E60000;
   color: white;
   border: none;
   border-radius: 15px;
@@ -122,8 +107,7 @@
   letter-spacing: 1px;
   cursor: pointer;
   margin-top: 10px;
-  /* Sombra estética sutil del mismo tono */
-  box-shadow: 0 10px 20px rgba(230, 0, 0, 0.25); 
+  box-shadow: 0 10px 20px rgba(230, 0, 0, 0.25);
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
@@ -139,7 +123,18 @@
   box-shadow: 0 5px 10px rgba(230, 0, 0, 0.2);
 }
 
-/* --- RESPONSIVE INTELIGENTE --- */
+.error-message {
+  color: #fff;
+  background: rgba(230, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 480px) {
   .login-container {
     padding-top: 1vh;
@@ -152,7 +147,6 @@
   }
 }
 
-/* Ajuste para pantallas muy bajas */
 @media (max-height: 700px) {
   .login-logo-custom {
     max-width: 200px;
