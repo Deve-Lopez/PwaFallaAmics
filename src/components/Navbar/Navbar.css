@@ -5,11 +5,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 20px 5%;
-  background: white;
-
-  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+  padding: 10px 4%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -21,47 +22,61 @@
 .header-left-content {
   display: flex;
   align-items: center;
-  gap: 20px;
-}
-
-.logo-container-small .nav-logo-img {
-  width: 110px;
-  height: auto;
+  gap: 10px;
+  flex: 1;
+  min-width: 0; /* permite que el texto se recorte en lugar de desbordar */
 }
 
 .logo-container-small {
   cursor: pointer;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .logo-container-small:hover {
   transform: scale(1.03);
 }
 
+.logo-container-small .nav-logo-img {
+  width: 100px;
+  height: auto;
+}
+
 /* TEXTO */
+.welcome-text-group {
+  min-width: 0;
+}
+
 .welcome-text-group h1 {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   margin: 0;
-  color: #333;
+  color: white;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-name-style {
-  color: #e63946;
+  color: #ffb3b8;
   font-weight: 800;
 }
 
 .sub-header-text {
-  color: #aaa;
-  font-size: 0.9rem;
-  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.78rem;
+  margin: 2px 0 0;
 }
 
 /* =========================
-   DERECHA (AVATAR)
+   DERECHA
 ========================= */
 .header-right-content {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  margin-left: 10px;
 }
 
 .avatar-nav-link {
@@ -69,7 +84,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 3px;
   transition: transform 0.2s ease;
 }
 
@@ -78,18 +93,16 @@
 }
 
 .profile-circle-nav {
-  width: 85px;
-  height: 85px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   overflow: hidden;
-
-  border: 4px solid #e63946;
-  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.2);
-
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f0f0f0;
+  background: rgba(255,255,255,0.2);
 }
 
 .profile-circle-nav img {
@@ -99,51 +112,58 @@
 }
 
 .avatar-placeholder-nav {
-  font-size: 40px;
+  font-size: 28px;
 }
 
 .profile-hint {
-  font-size: 0.85rem;
-  color: #e63946;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* BOTÓN VOLVER */
+.btn-back-nav {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(8px);
+}
+
+.btn-back-nav:hover {
+  background: rgba(255,255,255,0.35);
 }
 
 /* =========================
-   RESPONSIVE
+   ESCRITORIO
 ========================= */
-@media (max-width: 768px) {
-
+@media (min-width: 769px) {
   .home-header-modern {
-    padding: 12px 2%;
+    padding: 12px 10%;
   }
 
   .logo-container-small .nav-logo-img {
-    width: 95px;
+    width: 170px;
   }
 
   .welcome-text-group h1 {
-    font-size: 1.05rem;
-    max-width: 160px;
+    font-size: 1.15rem;
+    white-space: normal;
   }
 
   .profile-circle-nav {
-    width: 70px;
-    height: 70px;
-    border: 3px solid #e63946;
+    width: 90px;
+    height: 90px;
   }
 
   .avatar-placeholder-nav {
     font-size: 32px;
-  }
-}
-
-@media (min-width: 769px) {
-
-  .home-header-modern {
-    padding: 15px 15%;
-  }
-
-  .logo-container-small .nav-logo-img {
-    width: 200px;
   }
 }

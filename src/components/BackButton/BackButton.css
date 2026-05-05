@@ -1,0 +1,43 @@
+.back-nav-container {
+  width: 100%;
+  padding: 15px 5%; /* Alineado con el padding de tu Navbar */
+  display: flex;
+  align-items: center;
+  z-index: 999;
+  /* Opcional: un degradado muy suave para separarlo del fondo */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), transparent);
+}
+
+.back-btn-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.back-btn-pill:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(-3px);
+}
+
+.back-icon {
+  font-size: 1.1rem;
+}
+
+/* En escritorio le damos el mismo margen que al contenido del Navbar */
+@media (min-width: 769px) {
+  .back-nav-container {
+    padding: 20px 8%;
+  }
+}

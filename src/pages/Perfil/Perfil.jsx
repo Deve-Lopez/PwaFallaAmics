@@ -4,144 +4,139 @@ import { db } from "../../firebase/firebaseConfig";
 import { ref, update } from "firebase/database";
 import { getLocalSession, logout } from "../../services/authService";
 import imageCompression from "browser-image-compression";
-
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-
 import CryptoJS from "crypto-js";
 import "./Perfil.css";
+import BackButton from "../../components/BackButton/BackButton";
 
 const SECRET_KEY = "FallaAmicsNaquera_2026_SecureKey";
 
 function Perfil() {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const savedUser = getLocalSession();
-        if (savedUser) setUser(savedUser);
-        else navigate("/");
-    }, [navigate]);
+  useEffect(() => {
+    const savedUser = getLocalSession();
+    if (savedUser) setUser(savedUser);
+    else navigate("/");
+  }, [navigate]);
 
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        if (!file || !user?.id) return;
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file || !user?.id) return;
 
-        setLoading(true);
+    setLoading(true);
+    try {
+      const options = {
+        maxSizeMB: 0.1,
+        maxWidthOrHeight: 500,
+        useWebWorker: true
+      };
 
-        try {
-            const options = {
-                maxSizeMB: 0.1,
-                maxWidthOrHeight: 500,
-                useWebWorker: true
-            };
+      const compressedFile = await imageCompression(file, options);
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
 
-            const compressedFile = await imageCompression(file, options);
-            const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64Image = reader.result;
 
-            reader.readAsDataURL(compressedFile);
+        // Actualizar Firebase
+        await update(ref(db, `Falleros/${user.id}`), {
+          ImagenPerfil: base64Image
+        });
 
-            reader.onloadend = async () => {
-                const base64Image = reader.result;
+        // Actualizar estado y LocalStorage
+        const updatedUser = { ...user, ImagenPerfil: base64Image };
+        setUser(updatedUser);
 
-                await update(ref(db, `Falleros/${user.id}`), {
-                    ImagenPerfil: base64Image
-                });
+        const ciphertext = CryptoJS.AES.encrypt(
+          JSON.stringify(updatedUser),
+          SECRET_KEY
+        ).toString();
 
-                const updatedUser = { ...user, ImagenPerfil: base64Image };
-                setUser(updatedUser);
+        localStorage.setItem("session_vault", ciphertext);
+        setLoading(false);
+      };
+    } catch (error) {
+      setLoading(false);
+      alert("Error al actualizar la foto.");
+    }
+  };
 
-                const ciphertext = CryptoJS.AES.encrypt(
-                    JSON.stringify(updatedUser),
-                    SECRET_KEY
-                ).toString();
+  if (!user) return null;
 
-                localStorage.setItem("session_vault", ciphertext);
+  return (
+    <div className="app-layout">
+      {/* Fondo opcional: Puedes usar un degradado oscuro o el mismo video de la Home */}
+      <div className="perfil-bg-overlay"></div>
 
-                setLoading(false);
-            };
-        } catch (error) {
-            setLoading(false);
-            alert("Error al actualizar la foto.");
-        }
-    };
+      <Navbar user={user} showAvatar={false} />
 
-    if (!user) return null;
+      <BackButton />
 
-    return (
-        <div className="app-layout">
+      <main className="perfil-content">
+        <div className="glass-card-profile">
+          <h2 className="perfil-title">El meu Perfil</h2>
+          
+          <div className="avatar-edit-wrapper">
+            <input
+              type="file"
+              id="up-profile"
+              onChange={handleFileChange}
+              accept="image/*"
+              hidden
+            />
+            <label htmlFor="up-profile" className="avatar-large-label">
+              <div className={`avatar-large-box ${loading ? "loading-active" : ""}`}>
+                {user.ImagenPerfil ? (
+                  <img src={user.ImagenPerfil} alt="Perfil" />
+                ) : (
+                  <span className="huge-icon">👤</span>
+                )}
+                {loading && <div className="spinner-overlay"></div>}
+              </div>
+              <div className="camera-overlay">
+                <span>Canviar foto 📸</span>
+              </div>
+            </label>
+          </div>
 
-            <Navbar user={user} showAvatar={false} />
+          <div className="user-details-list">
+            <div className="detail-row">
+              <label>DNI</label>
+              <p>{user.id}</p>
+            </div>
+            <div className="detail-row">
+              <label>Nom Complet</label>
+              <p>{user.Nombre} {user.Apellidos}</p>
+            </div>
+            <div className="detail-row">
+              <label>Càrrec</label>
+              <span className="perfil-role-badge">
+                {user.Rol || "Faller/a"}
+              </span>
+            </div>
+          </div>
 
-            <main className="perfil-content">
-
-                <h2 className="perfil-title">
-                    Configuració del Perfil
-                </h2>
-
-                <div className="perfil-card-main">
-
-                    {/* AVATAR EDIT */}
-                    <div className="avatar-edit-wrapper">
-                        <input
-                            type="file"
-                            id="up-profile"
-                            onChange={handleFileChange}
-                            hidden
-                        />
-                        <label htmlFor="up-profile" className="avatar-large-label">
-                            <div className={`avatar-large-box ${loading ? "loading-spin" : ""}`}>
-                                {user.ImagenPerfil ? (
-                                    <img src={user.ImagenPerfil} alt="Perfil" />
-                                ) : (
-                                    <span className="huge-icon">👤</span>
-                                )}
-                            </div>
-                            <div className="camera-overlay">
-                                Toca per a canviar foto 📸
-                            </div>
-                        </label>
-                    </div>
-
-                    {/* DATOS USUARIO */}
-                    <div className="user-details-list">
-                        <div className="detail-row">
-                            <label>DNI</label>
-                            <p>{user.id}</p>
-                        </div>
-                        <div className="detail-row">
-                            <label>Nom</label>
-                            <p>{user.Nombre} {user.Apellidos}</p>
-                        </div>
-                        <div className="detail-row">
-                            <label>Càrrec</label>
-                            <span className="perfil-role-badge">
-                                {user.Rol || "Faller/a"}
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-
-                {/* BOTÓN FUERA DE LA CARD */}
-                <div className="perfil-actions">
-                    <button
-                        className="btn-logout-minimal"
-                        onClick={() => {
-                            logout();
-                            navigate("/");
-                        }}
-                    >
-                        Tancar Sessió
-                    </button>
-                </div>
-
-            </main>
-
-            <Footer />
+          <div className="perfil-actions">
+            <button
+              className="btn-logout-minimal"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+            >
+              Tancar Sessió
+            </button>
+          </div>
         </div>
-    );
+      </main>
+
+      <Footer />
+    </div>
+  );
 }
 
 export default Perfil;
