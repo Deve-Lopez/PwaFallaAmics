@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getLocalSession } from "../../services/authService";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import SubNavbar from "../../components/SubNavbar/SubNavbar";
 import "./Home.css";
 
 function Home() {
@@ -57,6 +58,8 @@ function Home() {
       {/* CONTENIDO POR ENCIMA DEL VIDEO */}
       <div className="content-layout">
         <Navbar user={user} />
+
+        <SubNavbar />
 
         <main className="main-content">
           <div className="glass-card-compact">
