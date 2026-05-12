@@ -4,11 +4,10 @@ import { db } from "../../firebase/firebaseConfig";
 import { ref, update } from "firebase/database";
 import { getLocalSession, logout } from "../../services/authService";
 import imageCompression from "browser-image-compression";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 import CryptoJS from "crypto-js";
 import "./Perfil.css";
 import BackButton from "../../components/BackButton/BackButton";
+import BottomNav from "../../components/BottomNav/BottomNav"; // Importante
 
 const SECRET_KEY = "FallaAmicsNaquera_2026_SecureKey";
 
@@ -29,33 +28,19 @@ function Perfil() {
 
     setLoading(true);
     try {
-      const options = {
-        maxSizeMB: 0.1,
-        maxWidthOrHeight: 500,
-        useWebWorker: true
-      };
-
+      const options = { maxSizeMB: 0.1, maxWidthOrHeight: 500, useWebWorker: true };
       const compressedFile = await imageCompression(file, options);
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
 
       reader.onloadend = async () => {
         const base64Image = reader.result;
+        await update(ref(db, `Falleros/${user.id}`), { ImagenPerfil: base64Image });
 
-        // Actualizar Firebase
-        await update(ref(db, `Falleros/${user.id}`), {
-          ImagenPerfil: base64Image
-        });
-
-        // Actualizar estado y LocalStorage
         const updatedUser = { ...user, ImagenPerfil: base64Image };
         setUser(updatedUser);
 
-        const ciphertext = CryptoJS.AES.encrypt(
-          JSON.stringify(updatedUser),
-          SECRET_KEY
-        ).toString();
-
+        const ciphertext = CryptoJS.AES.encrypt(JSON.stringify(updatedUser), SECRET_KEY).toString();
         localStorage.setItem("session_vault", ciphertext);
         setLoading(false);
       };
@@ -68,26 +53,15 @@ function Perfil() {
   if (!user) return null;
 
   return (
-    <div className="app-layout">
-      {/* Fondo opcional: Puedes usar un degradado oscuro o el mismo video de la Home */}
-      <div className="perfil-bg-overlay"></div>
-
-      <Navbar user={user} showAvatar={false} />
-
-      <BackButton />
+    <div className="app-shell">
+      {/* En PC, el CSS que hicimos moverá este Nav entre el Header y el Contenido */}
+      <BottomNav active="perfil" />
 
       <main className="perfil-content">
+      {/* Título limpio sin bloques grises detrás */}
         <div className="glass-card-profile">
-          <h2 className="perfil-title">El meu Perfil</h2>
-          
           <div className="avatar-edit-wrapper">
-            <input
-              type="file"
-              id="up-profile"
-              onChange={handleFileChange}
-              accept="image/*"
-              hidden
-            />
+            <input type="file" id="up-profile" onChange={handleFileChange} accept="image/*" hidden />
             <label htmlFor="up-profile" className="avatar-large-label">
               <div className={`avatar-large-box ${loading ? "loading-active" : ""}`}>
                 {user.ImagenPerfil ? (
@@ -95,7 +69,7 @@ function Perfil() {
                 ) : (
                   <span className="huge-icon">👤</span>
                 )}
-                {loading && <div className="spinner-overlay"></div>}
+                {loading && <div className="spinner-overlay"><div className="loader"></div></div>}
               </div>
               <div className="camera-overlay">
                 <span>Canviar foto 📸</span>
@@ -114,9 +88,7 @@ function Perfil() {
             </div>
             <div className="detail-row">
               <label>Càrrec</label>
-              <span className="perfil-role-badge">
-                {user.Rol || "Faller/a"}
-              </span>
+              <span className="perfil-role-badge">{user.Rol || "Faller/a"}</span>
             </div>
           </div>
 
@@ -133,8 +105,6 @@ function Perfil() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

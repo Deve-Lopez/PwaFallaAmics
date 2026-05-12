@@ -1,0 +1,94 @@
+/* ===========================
+   BOTTOM NAV
+=========================== */
+.bottom-nav {
+  position: fixed; /* Lo anclamos */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px; /* Ancho de móvil */
+  background: white;
+  display: flex;
+  padding: 10px 0 16px;
+  z-index: 1000;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s;
+  position: relative;
+}
+
+.nav-item i {
+  font-size: 22px;
+  color: #B4B2A9;
+  transition: color 0.2s;
+}
+
+.nav-item span {
+  font-size: 10px;
+  color: #B4B2A9;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-item.active i {
+  color: #D4537E;
+}
+
+.nav-item.active span {
+  color: #D4537E;
+}
+
+.nav-active-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #D4537E;
+  margin-top: -1px;
+}
+
+.nav-item:not(.active):hover i,
+.nav-item:not(.active):hover span {
+  color: #888780;
+}
+
+
+/* --- CONFIGURACIÓN PARA PC / WEB --- */
+@media (min-width: 768px) {
+  .bottom-nav {
+    /* 1. "Soltamos" el menú de la parte inferior */
+    position: static; 
+    transform: none;
+    left: auto;
+    
+    /* 2. Lo integramos en el flujo */
+    width: 100%;
+    max-width: none; /* Que use todo el ancho del app-shell */
+    margin: 0px 0; /* Espaciado entre el usuario y el banner */
+    
+    /* 3. Estilo de tarjeta Web */
+    background: white;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    padding: 12px 0;
+  }
+
+  /* Opcional: En PC podemos poner el texto al lado del icono */
+  .nav-item {
+    flex-direction: row; 
+    gap: 8px;
+  }
+  
+  .nav-active-dot {
+    display: none; /* En PC queda mejor resaltar el fondo o el color */
+  }
+}

@@ -2,9 +2,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
-import Perfil from "./pages/Perfil/Perfil"
-import Agenda from "./pages/Agenda/Agenda"
-import Noticias from "./pages/Noticias/Noticias"
+import Calendari from "./pages/Calendari/Calendari";
+import Fallers from "./pages/Fallers/Fallers";
+import Perfil from "./pages/Perfil/Perfil";
+import EventoDetalle from "./pages/EventoDetalle/EventoDetalle";
 
 function App() {
   return (
@@ -17,13 +18,16 @@ function App() {
         <Route path="/home" element={<Home />} />
 
         {/* Página del Perfil */}
-        <Route path="/perfil" element={<Perfil/>} />
+        <Route path="/calendari" element={<Calendari/>} />
+
+        {/* Página del evento */}
+        <Route path="/calendari/evento/:id" element={<EventoDetalle/>} />
 
         {/* Página de Agenda */}
-        <Route path="/agenda" element={<Agenda/>}/>
+        <Route path="/fallers" element={<Fallers/>}/>
 
         {/* Página de Noticias */}
-        <Route path="/noticias" element={<Noticias/>}/>
+        <Route path="/perfil" element={<Perfil/>}/>
       </Routes>
     </Router>
   );
