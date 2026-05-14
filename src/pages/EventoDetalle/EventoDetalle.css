@@ -1,196 +1,517 @@
-/* Layout Base */
-.detail-screen {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
-  background-color: #fff;
-  overflow: hidden;
-  position: relative;
+/* ===========================
+   BASE
+=========================== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f0eeea;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.scroll-content {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.detail-card {
-  width: 100%;
-  max-width: 650px;
+/* ===========================
+   SCREEN
+=========================== */
+.ed-screen {
+  background: #f0eeea;
+  min-height: 100vh;
   margin: 0 auto;
   position: relative;
-}
-
-/* Cabecera Overlay */
-.header-overlay {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-}
-
-.back-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  cursor: pointer;
-}
-
-.event-tag {
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-/* Imagen Hero */
-.hero-img {
   width: 100%;
-  height: 300px;
+  max-width: 1100px; /* 👈 mismo ancho que calendari */
 }
 
-.hero-img img {
+.ed-scroll {
+  overflow-y: auto;
+  padding-bottom: 180px;
+}
+
+/* ===========================
+   LOADING
+=========================== */
+.ed-loading {
+  background: #f0eeea;
+  color: #5F5E5A;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.ed-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f4c0d1;
+  border-top-color: #D4537E;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===========================
+   HERO
+=========================== */
+.ed-hero {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+}
+
+.ed-hero img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Contenedor de Información */
-.info-container {
-  padding: 30px 20px;
-  margin-top: -35px;
-  background: white;
-  border-radius: 35px 35px 0 0;
-  min-height: 600px;
-  position: relative;
+.ed-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.45)
+  );
 }
 
-.title {
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0;
-  color: #1a1a1a;
-}
-
-.stats {
-  color: #D4537E;
-  font-weight: 700;
-  margin: 10px 0 25px 0;
-}
-
-.date-pill {
+/* ===========================
+   TOP ACTIONS
+=========================== */
+.ed-back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  color: #2C2C2A;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: #f4f6f8;
-  padding: 18px;
-  border-radius: 20px;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-.date-pill p {
-  margin: 0;
+.ed-back-btn i {
+  font-size: 20px;
+}
+
+.ed-event-tag {
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: white;
+  font-size: 11px;
   font-weight: 600;
+  z-index: 5;
+  letter-spacing: 0.3px;
+}
+
+/* ===========================
+   BODY
+=========================== */
+.ed-body {
+  position: relative;
+  margin-top: -28px;
+  background: #f0eeea;
+  border-radius: 28px 28px 0 0;
+  padding: 24px 16px 0;
+}
+
+/* ===========================
+   TITLE
+=========================== */
+.ed-title {
+  font-size: 28px;
+  line-height: 1.15;
+  color: #2C2C2A;
+  margin: 0 0 18px;
+  font-weight: 600;
+}
+
+/* ===========================
+   STATS
+=========================== */
+.ed-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.ed-stat-pill {
+  background: white;
+  border-radius: 999px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0.5px solid rgba(0,0,0,0.08);
+  font-size: 12px;
+  color: #2C2C2A;
+}
+
+.ed-stat-pill i {
+  color: #D4537E;
+  font-size: 15px;
+}
+
+.ed-stat-pill.secondary i {
+  color: #7F77DD;
+}
+
+/* ===========================
+   INFO BLOCK
+=========================== */
+.ed-info-block {
+  background: white;
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: 0.5px solid rgba(0,0,0,0.08);
+  margin-bottom: 22px;
+}
+
+.ed-info-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ed-info-icon i {
+  font-size: 22px;
+}
+
+.ed-info-icon.purple {
+  background: #EEEDFE;
+}
+
+.ed-info-icon.purple i {
+  color: #7F77DD;
+}
+
+.ed-info-label {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: #888780;
+  margin-bottom: 4px;
+}
+
+.ed-info-value {
+  font-size: 14px;
+  color: #2C2C2A;
+  font-weight: 500;
+  line-height: 1.4;
   text-transform: capitalize;
 }
 
-/* Fotos Subidas (Base64) */
-.extra-photos {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
+/* ===========================
+   SECTIONS
+=========================== */
+.ed-section {
+  margin-bottom: 28px;
 }
 
-.photo-frame {
+.ed-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2C2C2A;
+  margin-bottom: 12px;
+}
+
+.ed-section-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5F5E5A;
+  margin: 0;
+}
+
+/* ===========================
+   PHOTO
+=========================== */
+.ed-photo-frame {
   width: 100%;
-  margin: 15px 0;
-  border-radius: 20px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: opacity 0.3s ease;
+  background: white;
+  border: 0.5px solid rgba(0,0,0,0.08);
 }
 
-.photo-frame img {
+.ed-photo-frame img {
   width: 100%;
   display: block;
 }
 
-.loading-active {
-  opacity: 0.5;
-  filter: grayscale(1);
-}
-
-.no-photo-placeholder {
-  padding: 30px;
-  background: #fafafa;
-  border: 2px dashed #eee;
+.ed-no-photo {
+  background: white;
   border-radius: 20px;
+  padding: 30px 20px;
   text-align: center;
-  color: #bbb;
-  font-style: italic;
-  margin: 15px 0;
+  color: #888780;
+  font-size: 13px;
+  border: 1px dashed rgba(0,0,0,0.08);
 }
 
-.upload-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 12px 20px;
-  background: #f0f2f5;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
+/* ===========================
+   UPLOAD BUTTON
+=========================== */
+.ed-upload-btn {
+  margin-top: 14px;
+  background: white;
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0.5px solid rgba(0,0,0,0.08);
+  font-size: 13px;
+  font-weight: 500;
+  color: #2C2C2A;
   cursor: pointer;
 }
 
-/* Espaciador Crítico */
-.spacer {
-  height: 220px; 
+.ed-upload-btn i {
+  color: #D4537E;
+  font-size: 18px;
 }
 
-/* BARRA FLOTANTE (Encima del BottomNav) */
-.floating-action-bar {
+/* ===========================
+   SPACER
+=========================== */
+.ed-spacer {
+  height: 140px;
+}
+
+/* ===========================
+   FLOATING BAR
+=========================== */
+.ed-action-bar {
   position: fixed;
-  bottom: 85px; 
+  bottom: 84px;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 450px;
-  background: white;
-  padding: 15px 25px;
-  border-radius: 25px;
+  width: calc(100% - 28px);
+  max-width: 452px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 26px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border: 0.5px solid rgba(0,0,0,0.06);
+  z-index: 20;
+}
+
+/* ===========================
+   CTA ROW
+=========================== */
+.ed-cta-row,
+.ed-confirmed-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.ed-cta-text p,
+.ed-confirmed-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2C2C2A;
+}
+
+.ed-cta-text span,
+.ed-confirmed-sub {
+  font-size: 12px;
+  color: #888780;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+.ed-btn-primary,
+.ed-btn-confirm,
+.ed-btn-cancel {
+  border: none;
+  border-radius: 18px;
+  padding: 14px 18px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.ed-btn-primary:active,
+.ed-btn-confirm:active,
+.ed-btn-cancel:active {
+  transform: scale(0.97);
+}
+
+.ed-btn-primary,
+.ed-btn-confirm {
+  background: #D4537E;
+  color: white;
+}
+
+.ed-btn-cancel {
+  background: #F5F4F1;
+  color: #2C2C2A;
+}
+
+/* ===========================
+   CONFIRMED
+=========================== */
+.ed-confirmed-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ed-confirmed-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #E1F5EE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ed-confirmed-badge i {
+  color: #1D9E75;
+  font-size: 20px;
+}
+
+/* ===========================
+   SELECTOR
+=========================== */
+.ed-selector-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ed-selector-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  z-index: 1000;
-  border: 1px solid #f0f0f0;
 }
 
-.btn {
-  background: #1a1a1a;
-  color: white;
+.ed-selector-header span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ed-close-selector {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   border: none;
-  padding: 12px 25px;
-  border-radius: 15px;
-  font-weight: 700;
+  background: #F5F4F1;
+}
+
+.ed-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ed-option-row {
+  background: #F8F7F4;
+  border: none;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #2C2C2A;
+}
+
+.ed-option-row.selected {
+  background: #FBEAF0;
+  color: #D4537E;
+  font-weight: 600;
+}
+
+.ed-option-row i {
+  font-size: 18px;
+}
+
+/* ===========================
+   HERO MENU
+=========================== */
+
+.ed-hero-menu {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 20;
+}
+
+.ed-menu-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   cursor: pointer;
 }
 
-.btn.active {
-  background: #22C55E;
+.ed-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  min-width: 160px;
 }
 
-.txt p {
-  margin: 0;
-  font-weight: 800;
-  font-size: 0.95rem;
+.ed-menu-item {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: white;
+  text-align: left;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ed-menu-item:hover {
+  background: #f5f5f5;
+}
+
+.ed-menu-item.danger {
+  color: #e24b4a;
+}
+
+/* ===========================
+   DESKTOP
+=========================== */
+@media (min-width: 480px) {
+  .ed-screen {
+    box-shadow: 0 0 40px rgba(0,0,0,0.08);
+  }
 }
